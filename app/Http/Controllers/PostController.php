@@ -12,7 +12,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $posts = Post::with('user:id,name,profile_photo_path')->latest()->get();
+        $title = 'قائمة المنشورات';
+        return view('index',compact('posts' , "title"));
     }
 
     /**

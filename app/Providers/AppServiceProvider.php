@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Http\ViewComposer\CategoryComposer ;
+use App\Http\ViewComposer\RolesComposer;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +22,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        View::composer(['partiaks.sidebar','lists.categories'] , CategoryComposer::class);
+        View::composer('lists.roles' , RolesComposer::class);
     }
 }
