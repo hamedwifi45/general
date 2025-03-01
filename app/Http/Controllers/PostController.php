@@ -7,12 +7,16 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
+    public $post;
+    public function __construct(Post $post){
+        $this->post = $post;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $posts = Post::with('user:id,name,profile_photo_path')->latest()->get();
+        $posts = $this->post::with('user:id,name,profile_photo_path')->approved()->paginate(10);
         $title = 'قائمة المنشورات';
         return view('index',compact('posts' , "title"));
     }
@@ -38,7 +42,8 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        
+        return view('posts.show' , compact('post'));
     }
 
     /**
@@ -63,5 +68,12 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         //
+    }
+    public function search(Request $request){
+        $posts = $this->post->where('title','LIKE',"%".$request->keyword."%")->with('user')->approved()->paginate(10);
+        dd($posts,$request->keyword);
+        $title = "نتائج البحث عن" . $request->keyword ; 
+        return view('index',compact('posts' , "title"));
+
     }
 }
