@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -26,7 +27,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('posts.create');
     }
 
     /**
@@ -34,7 +35,15 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request);
+        $request->validate(["title" => 'required','category_id'=> 'required','body' => 'required']);
+        if($request->hasFile('image')){
+            $file = $request->file('image');
+            $filename = time() . $file->getClientOriginalName();
+            $file->move('storage/images/',$filename);
+        }
+        $request->user()->posts()->create($request->all() + ['image_path' => $filename ?? 'defult.jpg'] );
+        return back()->with('success' , "تم اضافة المنشور بنجاح");
     }
 
     /**
@@ -42,8 +51,8 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        
-        return view('posts.show' , compact('post'));
+        $comments = $post->comments()->get()->sortByDesc('created_at');
+        return view('posts.show' , compact('post' , 'comments'));
     }
 
     /**
@@ -69,9 +78,14 @@ class PostController extends Controller
     {
         //
     }
+    public function getcategory($id , $slug){
+        $posts = $this->post::with('user')->approved()->whereCategory_id($id)->paginate(10);
+        $title = "المنشورات العائدة لتصنيف: ".Category::find($id)->title;
+        // dd($id , $slug ,$posts );
+        return view('index',compact('posts', 'title'));
+    }
     public function search(Request $request){
-        $posts = $this->post->where('title','LIKE',"%".$request->keyword."%")->with('user')->approved()->paginate(10);
-        dd($posts,$request->keyword);
+        $posts = $this->post->approved()->where('body','LIKE',"%".$request->keyword."%")->with('user')->paginate(10);
         $title = "نتائج البحث عن" . $request->keyword ; 
         return view('index',compact('posts' , "title"));
 

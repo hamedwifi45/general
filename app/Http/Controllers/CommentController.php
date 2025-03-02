@@ -3,10 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use App\Models\Post;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
+    public $comment;
+    public function __construct(Comment $comments){
+        $this->comment = $comments;
+    }
     /**
      * Display a listing of the resource.
      */
@@ -28,7 +33,31 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate(['body'=>'required']);
+        $comment = $this->comment;
+        $comment->body = $request->get('body');
+        $comment->user()->associate($request->user());
+        $comment->post_id = $request->get('post_id');
+        $post = Post::find($request->get('post_id'));
+        $post->comments()->save($comment);
+
+        return back()->with('success' , "تم اضافة التعليق بنجاح");
+
+    }
+    public function replayStore(Request $request){
+        $request->validate(['comment_body'=>'required']);
+
+        $replay = new Comment();
+        $replay->body = $request->get('comment_body');
+        $replay->user()->associate($request->user());
+        $replay->post_id = $request->get('post_id');
+        $replay->parent_id = $request->get('comment_id');
+        $post = Post::find($request->get('post_id'));
+        $post->comments()->save($replay);
+
+        return back()->with('success' , "تم اضافة الرد بنجاح");
+
+
     }
 
     /**
@@ -36,7 +65,7 @@ class CommentController extends Controller
      */
     public function show(Comment $comment)
     {
-        //
+        
     }
 
     /**

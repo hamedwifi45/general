@@ -21,7 +21,7 @@
     
             <div class="post-content">
                 <h3 class="post-title">
-                    <a href="{{route('post.show' , $post->id)}}" class="title-link text-xl">{{$post->title}}</a>
+                    <a href="{{route('post.show' , $post->slug)}}" class="title-link text-xl">{{$post->title}}</a>
                 </h3>
                 <div class="excerpt">
                     {!! Str::limit($post->body, 200, '...') !!}

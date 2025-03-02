@@ -25,6 +25,31 @@
                 <p class="h6">{!!$post->body !!}</p>
             </div>
         </div>
+        @auth
+        <div class="row form-group mt-5">
+            <div class="col-lg-12 col-md-6 col-xs-11">
+                <form action="{{route('comment.store')}}" method="post" id="comments">
+                    @csrf
+                    <div class="form-group">
+                        <textarea name="body" rows="5" placeholder="اضف تعليقا ..." class="form-control @error('body') is-invalid @enderror" id=""></textarea>
+                        @error('body')
+                            <span class="invalid-feedback">
+                                <strong>{{$message}}</strong>
+                            </span>
+                        @enderror 
+                    </div>
+                    <button type="submit" class="btn btn-outline-dark mt-3" >اضف تعليق</button>
+                    <input type="hidden" name="post_id" value="{{$post->id}}">
+                </form>
+            </div>
+        </div>
+            
+        @else
+        <div class="alert alert-info" role="alert">
+            يجب عليك تسجيل الدخول لتتمكن من التعليق
+        </div>
+        @endauth
+
 
         <div class="post-footer">
             <div class="meta-item">
@@ -37,6 +62,10 @@
             </div>
         </div>
     </div>
+    <div id="comments" class="p-0 word-break container mt-5">
+        <h4 class="mb-5">تعليقات</h4>
+        @include('comments.all' , ['comments' => $comments])
+    </div>
 </div>
 
 
@@ -46,10 +75,36 @@
 
 @section('style')
 <style>
+        
+        .reply-button:hover {
+            color: #1a73e8 !important;
+            text-decoration: underline;
+        }
+        
+        .reply-form {
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+        
+        .form-control:focus {
+            border-color: #3490dc;
+            box-shadow: 0 0 0 2px rgba(52, 144, 220, 0.25);
+        }
+    
     .post-img{
         text-align: justify;
         max-width: 600px;
         max-height: 600px ;
     }
 </style>
+@endsection
+
+@section('script')
+<script>
+
+</script>
 @endsection
