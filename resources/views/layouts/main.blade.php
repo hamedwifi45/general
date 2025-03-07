@@ -12,13 +12,20 @@
     @vite(['resources/css/app.css' , 'resources/js/app.js'])
     <script src="https://cdn.ckeditor.com/ckeditor5/39.0.2/classic/ckeditor.js"></script>
     <style>
+<<<<<<< HEAD
     
+=======
+>>>>>>> d8a9e8f0b91b757241aaf9f61ae97f7f7eef95c7
          body {
                 font-family: 'Cairo', sans-serif;
                 background-color: #f0f0f0;
             }
 
+<<<<<<< HEAD
             a { 
+=======
+            /* a { 
+>>>>>>> d8a9e8f0b91b757241aaf9f61ae97f7f7eef95c7
                 text-decoration: none !important; 
                 color: black;
             }
@@ -30,7 +37,11 @@
             ul, menu {
                 list-style: inside !important;
                 padding-right: 2rem !important;
+<<<<<<< HEAD
             }
+=======
+            } */
+>>>>>>> d8a9e8f0b91b757241aaf9f61ae97f7f7eef95c7
 
             input[type=file] {
                 position: absolute !important;
