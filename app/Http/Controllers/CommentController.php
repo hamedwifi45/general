@@ -41,6 +41,15 @@ class CommentController extends Controller
         $post = Post::find($request->get('post_id'));
         $post->comments()->save($comment);
 
+        $data = [
+            'post_title' => $post->title,
+            'post' => $post,
+            'user_name' => $request->user()->name,
+            'user_image' => $request->user()->profile_photo_path ? : $request->user()->profile_photo_url ,
+
+        ];
+        event(new CommentNotifiction($data) )
+
         return back()->with('success' , "تم اضافة التعليق بنجاح");
 
     }

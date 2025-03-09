@@ -11,6 +11,7 @@
     @yield('style')
     @vite(['resources/css/app.css' , 'resources/js/app.js'])
     <script src="https://cdn.ckeditor.com/ckeditor5/39.0.2/classic/ckeditor.js"></script>
+    <link rel="stylesheet" href="{!! asset('theme/css/sb-admin-2.min.css') !!}">
     <style>
          body {
                 font-family: 'Cairo', sans-serif;
@@ -229,6 +230,24 @@
 
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    {{-- pusher --}}
+    <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+    <script>
+
+        // Enable pusher logging - don't include this in production
+        Pusher.logToConsole = true;
+    
+        var pusher = new Pusher('6990f7332b32e2674464', {
+          cluster: 'mt1'
+        });
+    
+        var channel = pusher.subscribe('my-channel');
+        channel.bind('my-event', function(data) {
+          alert(JSON.stringify(data));
+        });
+      </script>
+      <script src="{!! asset('theme/js/sb-admin-2.min.js') !!}"></script>
+
     @yield('script')
 </body>
 </html>
