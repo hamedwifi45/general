@@ -1,10 +1,10 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
       <a class="navbar-brand pl-5" href="{{ url('/') }}">{{ config('app.name')}}</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-bs-toggle="" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <div class=" navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
               <li class="nav-item me-5">
                   <a class="nav-link active" aria-current="page" href="{{ url('/') }}">الصفحة الرئيسية</a>
@@ -49,12 +49,12 @@
             <div class="topbar" style="z-index: 1">
                 @auth
                     
-                <li class="nav-item dropdown no-arrow mx-1">
+                <li class="nav-item dropdown alert-dropdown no-arrow mx-1">
                     <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
                         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="bi bi-bell" style="font-size: 1.5em; "></i>
                         <!-- Counter - Alerts -->
-                        <span class="badge badge-danger badge-counter">3+</span>
+                        <span class="badge badge-danger notif-count badge-counter" data-count="{{ App\Models\Alert::where('user_id', Auth::user()->id)->first()->alert ?: 0 }}">{{ App\Models\Alert::where('user_id', Auth::user()->id)->first()->alert ?: 0 }}</span>
                     </a>
                     <!-- Dropdown - Alerts -->
                     <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in mr-auto"

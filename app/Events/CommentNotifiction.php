@@ -40,6 +40,6 @@ class CommentNotifiction implements ShouldBroadcast
      */
     public function broadcastOn(): array
     {
-        return new PrivateChannel('real_not.' . $this->post->user_id);
+        return new PrivateChannel('real-not.'.$this->post->user_id);
     }
 }
