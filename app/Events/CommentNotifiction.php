@@ -45,7 +45,7 @@ class CommentNotifiction implements ShouldBroadcast
             ];
     }
     public function broadcastAs()
-  {
+    {
       return 'CommentNotifiction';
-  }
+    }
 }
