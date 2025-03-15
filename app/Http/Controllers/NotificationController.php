@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Alert;
 use App\Models\Notification;
+use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class NotificationController extends Controller
@@ -12,7 +15,23 @@ class NotificationController extends Controller
      */
     public function index()
     {
-        //
+        $not = Notification::where(["user_id" ,"!=", Auth::user()->id],['post_userId' ,'=' , Auth::user()->id])->orderByDesc('created_at')->limit(5)->get();
+        dd($not);
+        $data = [];
+        $alert = Alert::where('user_id' , Auth::user()->id)->first();
+        $alert->alert = 0;
+        $alert->save();
+        foreach($not as $item){
+            $data[] = [
+                'user_name' => User::find($item->user_id)->name,
+                'user_image' => User::find($item->user_id)->profile_photo_url,
+                'post_title' => Post::find($item->post_id)->title,
+                'post_slug' => Post::find($item->post_id)->slug,
+                'date' => $item->created_at->diffForHumans() 
+            ];
+        }
+
+        return response()->json(['not' => $data]);
     }
 
     /**

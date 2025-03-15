@@ -251,39 +251,103 @@
       </script>
       <script src="{!! asset('theme/js/sb-admin-2.min.js') !!}"></script>
       <script>
+
+        // Enable pusher logging - don't include this in production
+        Pusher.logToConsole = true;
+      
+        var pusher = new Pusher('6990f7332b32e2674464', {
+          cluster: 'mt1'
+        });
+      
+        var channel = pusher.subscribe('my-channel');
+        channel.bind('my-event', function(data) {
+          alert(JSON.stringify(data));
+        });
+      </script>
+      <script src="{!! asset('theme/js/sb-admin-2.min.js') !!}"></script>
+      {{-- <script src="js/echo.js"></script> --}}
+
+      <script type="module">
         @if (Auth::check())
-            var post_userId = {{Auth::user()->id}};
-            Echo.private(`real_not.${post_userId}`);
-            .listen('CommentNotifiction',(data)=>{
-                var notWarp = $('.alert-dropdown');
-                var notTog = notWarp.find('a[data-bs-toggle]');
-                var notCountElem = notTog.find('span[data-count]');
-                var notCount = parseInt(notCountElem.text());
-                var nots = notWarp.find("div.alert-body");
-                var exnots = nots.html();
-                var newnotHtml = 
-                '<a class="dropdown-item d-flex align-items-center" href="#">\
-                    <div class="ml-3">\
-                        <div>\
-                            <img style="float:right" src="'+data.user_image+'" width="50px" class="rounded-full">\
-                        </div>\
-                        <div>\
-                            <div class="small text-gray-500 ">\
-                                '+data.date+'\
-                            </div>\
-                            <span>'+data.user_name+' وضع تعليقا على المنشور <b>'+data.post_title+'</b></span>\
-                        </div>\
-                    </div>\            
-                    
-                </a>';
-                nots.html(newnotHtml + exnots);
-                notCount += 1;
-                notWarp.find('.notif-count').text(notCount);
-                notWarp.show(); 
-            });
-     
-            
+        var post_userId = {{Auth::user()->id}};
+        console.log(`real_not.${post_userId}`);
+
+        Echo.private(`real_not.${post_userId}`)
+          .listen('CommentNotifiction',(data)=>{
+          var notWarp = $('.alert-dropdown');
+          var notTog = notWarp.find('a[data-bs-toggle]');
+          var notCountElem = notTog.find('span[data-count]');
+          var notCount = parseInt(notCountElem.text());
+          var nots = notWarp.find("div.alert-body");
+          var exnots = nots.html();
+          var newnotHtml = 
+              '<a class="dropdown-item d-flex align-items-center" href="#">\
+      <div class="ml-3">\
+      <div>\
+      <img style="float:right" src="'+data.user_image+'" width="50px" class="rounded-full">\
+        </div>\
+      <div>\
+      <div class="small text-gray-500 ">\
+      '+data.date+'\
+        </div>\
+      <span>'+data.user_name+' وضع تعليقا على المنشور <b>'+data.post_title+'</b></span>\
+        </div>\
+        </div></a>';
+          nots.html(newnotHtml + exnots);
+          notCount += 1;
+          notWarp.find('.notif-count').text(notCount);
+          notWarp.show(); 
+        });
+      
+      
         @endif
+      </script>
+      <script>
+        var token = "{{ Session::token()}}";
+        var urlnotify = "{{route('notifi')}}";
+        $('#alertsDropdown').on('click' , function(event){
+            event.preventDefault();
+            var notWarp = $('.alert-dropdown');
+            var notTog = notWarp.find('a[data-bs-toggle]');
+            var notCountElem = notTog.find('span[data-count]');
+            notCount = 0;
+            notCountElem.attr('data-count',notCount);
+            notWarp.find('.notif-count').text(notCount);
+            notWarp.show();
+            
+            $.ajax(
+                {
+                    method:'POST',
+                    url: urlnotify,
+                    data:{
+                        _token:token
+                    },
+                    success : function(data){
+                        var resnots = "";
+                        $.each(data.not , function(i , item){
+                            var post_slug = "{{route('post.show' , ':post_slug')}}";
+                            post_slug = post_slug.replace(":post_slug" , item.post_slug);
+                         resnots = 
+                                '<a class="dropdown-item d-flex align-items-center" href="'+post_slug+'">\
+                                    <div class="ml-3">\
+                                            <div>\
+                                                <img style="float:right" src="'+item.user_image+'" width="50px" class="rounded-full">\
+                                            </div>\
+                                    <div>\
+                                        <div class="small text-gray-500 ">\
+                                            '+item.date+'\
+                                        </div>\
+                                        <span>'+item.user_name+' وضع تعليقا على المنشور <b>'+item.post_title+'</b></span>\
+                                    </div>\
+                                    </div>\
+                                </a>';
+                                $('.alert-body').html(resnots);
+
+                        });
+                    }
+                }
+            )
+        });
       </script>
     @yield('script')
 </body>

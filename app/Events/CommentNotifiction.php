@@ -7,12 +7,13 @@ use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 
 
-class CommentNotifiction implements ShouldBroadcast
+
+class CommentNotifiction implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels ;
 
@@ -38,11 +39,9 @@ class CommentNotifiction implements ShouldBroadcast
      *
      * @return array<int, \Illuminate\Broadcasting\Channel>
      */
-    public function broadcastOn(): array
+    public function broadcastOn(): Channel
     {
-        return [
-            new PrivateChannel('real_not.'.$this->post->user_id)
-            ];
+        return new PrivateChannel('real_not.'.$this->post->user_id);
     }
     public function broadcastAs()
     {

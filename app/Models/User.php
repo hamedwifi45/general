@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Auth;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -80,5 +81,14 @@ class User extends Authenticatable
     }
     public function alert(){
         return $this->hasOne(Alert::class);
+    }
+    protected static function booted()
+    {
+        static::created(function ($user) {
+            Alert::create([
+                'user_id' => $user->id,
+                'alert' => 0, // أو أي قيمة ابتدائية تريدها
+            ]);
+        });
     }
 }

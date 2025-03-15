@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
@@ -12,6 +13,7 @@ Route::resource('/comment',CommentController::class);
 Route::post('/replay/store' , [CommentController::class ,'replayStore'])->name('replay.add');
 Route::get('/category/{id}/{slug}' , [PostController::class , 'getcategory'])->name('category');
 Route::post('/search' , [PostController::class , 'search'])->name('search');
+Route::post('/notifi' , [NotificationController::class , 'index'])->name('notifi');
 
 Route::middleware([
     'auth:sanctum',

@@ -6,7 +6,7 @@ use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Events\CommentNotifiction;
-
+use App\Models\Notification;
 
 class CommentController extends Controller
 {
@@ -50,6 +50,14 @@ class CommentController extends Controller
             'user_image' => $request->user()->profile_photo_path ? : $request->user()->profile_photo_url ,
 
         ];
+        // Notifiction
+        if($request->user()->id != $post->user_id){
+            $not = new Notification;
+            $not->user_id = $request->user()->id;
+            $not->post_id = $post->id;
+            $not->post_userId = $post->user_id;
+            $not->save();
+        }
         event(new CommentNotifiction($data) );
 
         return back()->with('success' , "تم اضافة التعليق بنجاح");
