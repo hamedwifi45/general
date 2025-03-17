@@ -35,9 +35,9 @@
                 </div>
                 <div class="meta-item comments-count">
                     <i class="bi bi-chat comment-icon"></i>
-                    <span>{{$post->comments->count()}}</span>
-                </div>
-            </div>
+          </div>
+                           <span>{{$post->comments->count()}}</span>
+           </div>
     
             <div class="card-overlay"></div>
         </div>

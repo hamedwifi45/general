@@ -6,6 +6,7 @@ use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Events\CommentNotifiction;
+use App\Models\Alert;
 use App\Models\Notification;
 
 class CommentController extends Controller
@@ -59,6 +60,11 @@ class CommentController extends Controller
             $not->save();
         }
         event(new CommentNotifiction($data) );
+        if($request->user()->id != $post->user_id){
+            $alert = Alert::where('user_id' , $post->user_id)->first();
+            $alert->alert++;
+            $alert->save();
+        }
 
         return back()->with('success' , "تم اضافة التعليق بنجاح");
 

@@ -7,6 +7,18 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+
+    public $user;
+    public function __construct(User $user){
+        $this->user = $user;
+    }
+
+
+    public function getPostsByUser($id){
+        $content = $this->user::with('posts')->find($id);
+
+return view('user.profile' , compact('content'));
+    }
     /**
      * Display a listing of the resource.
      */

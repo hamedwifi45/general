@@ -6,6 +6,7 @@ use App\Models\Alert;
 use App\Models\Notification;
 use App\Models\Post;
 use App\Models\User;
+use Auth;
 use Illuminate\Http\Request;
 
 class NotificationController extends Controller
@@ -15,8 +16,10 @@ class NotificationController extends Controller
      */
     public function index()
     {
-        $not = Notification::where(["user_id" ,"!=", Auth::user()->id],['post_userId' ,'=' , Auth::user()->id])->orderByDesc('created_at')->limit(5)->get();
-        dd($not);
+        $not = Notification::where([
+            ['user_id', '!=', auth()->user()->id],
+            ['post_userId', '=', auth()->user()->id]
+        ])->orderByDesc('created_at')->limit(5)->get();
         $data = [];
         $alert = Alert::where('user_id' , Auth::user()->id)->first();
         $alert->alert = 0;
@@ -30,6 +33,7 @@ class NotificationController extends Controller
                 'date' => $item->created_at->diffForHumans() 
             ];
         }
+
 
         return response()->json(['not' => $data]);
     }
@@ -80,5 +84,13 @@ class NotificationController extends Controller
     public function destroy(Notification $notification)
     {
         //
+    }
+    public function allNotification(){
+        $nots = Notification::where([
+            ['user_id', '!=', auth()->user()->id],
+            ['post_userId', '=', auth()->user()->id]
+        ])->orderByDesc('created_at')->with('user')->paginate(10);
+        $title = "جميع الاشعارات"; 
+        return view('nots.show' , compact('nots' , 'title'));
     }
 }

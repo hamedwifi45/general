@@ -3,6 +3,7 @@
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/' , [PostController::class,'index']);
@@ -14,6 +15,10 @@ Route::post('/replay/store' , [CommentController::class ,'replayStore'])->name('
 Route::get('/category/{id}/{slug}' , [PostController::class , 'getcategory'])->name('category');
 Route::post('/search' , [PostController::class , 'search'])->name('search');
 Route::post('/notifi' , [NotificationController::class , 'index'])->name('notifi');
+Route::get('/notifiction' , [NotificationController::class , 'allNotification'])->name('all.Notification');
+
+
+Route::get('/heloworld/{id}' , [UserController::class , 'getPostsByUser'])->name('profile');
 
 Route::middleware([
     'auth:sanctum',
