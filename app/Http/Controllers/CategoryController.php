@@ -7,12 +7,17 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+    public $category;
+
+    public function __construct(Category $category){
+        $this->category = $category;
+    } 
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return view('admin.category' , ['categories'=> Category::all()]);
     }
 
     /**
@@ -28,7 +33,13 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate( [
+            'title' => 'required',
+        ]);
+        $data['title'] = $request->title;
+        $this->category->create($data + ['slug'=>$request->title]);
+
+        return back()->with('success', "تم إضافة التصنيف بنجاح");
     }
 
     /**
@@ -60,6 +71,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        return back()->with('success' , 'تم الحذف بنجاح');
     }
 }

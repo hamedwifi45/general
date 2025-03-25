@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Slug;
 use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -60,7 +62,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        return view('posts.edit' , compact('post'));
     }
 
     /**
@@ -68,7 +70,27 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $data = $request->validate( [
+            'title' => 'required',
+            'body' => 'required',
+        ]);
+    
+        $data['slug'] = Slug::unquiSlug($request->title,'posts');
+        $data['category_id'] = $request->category_id;
+    
+        if($request->hasFile('image')) {
+            if ($post->image_path && $post->image_path !== 'defult.jpg') {
+                Storage::delete('images/' . $post->image_path);
+            }
+            $file = $request->file('image');
+            $filename = time() . $file->getClientOriginalName();
+            $file->storeAs('images/', $filename);
+        }
+    
+        $request->user()->posts()->where('slug', $post->slug)->update($data + ['image_path'=> $filename ?? 'default.jpg']);
+    
+        return redirect(route('posts.show' , $post->slug))->with('success', 'تم تعديل المنشور بنجاح');
+    
     }
 
     /**
@@ -76,7 +98,11 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        if ($post->image_path && $post->image_path !== 'defult.jpg') {
+            Storage::delete('images/' . $post->image_path);
+        }
+        $post->delete();
+        return back()->with('success' , "تم حذف المنشور بنجاح");
     }
     public function getcategory($id , $slug){
         $posts = $this->post::with('user')->approved()->whereCategory_id($id)->paginate(10);

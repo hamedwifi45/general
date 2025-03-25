@@ -1,35 +1,26 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\admin;
 
+use App\Http\Controllers\Controller;
+use App\Models\Category;
+use App\Models\Comment;
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class Dashbord extends Controller
 {
-
-    public $user;
-    public function __construct(User $user){
-        $this->user = $user;
-    }
-
-
-    public function getPostsByUser($id){
-        $content = $this->user::with('posts')->find($id);
-
-return view('user.profile' , compact('content'));
-    }
-    public function getCommentsByUser($id){
-        $content = $this->user::with('comments')->find($id);
-
-        return view('user.profile' , compact('content'));
-    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return view('admin.index')
+                    ->with('posts_count' , Post::count())
+                    ->with('user_count' , User::count())
+                    ->with('comment_count' , Comment::count())
+                    ->with('category_count' , Category::count());
     }
 
     /**
@@ -51,7 +42,7 @@ return view('user.profile' , compact('content'));
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
+    public function show(string $id)
     {
         //
     }
@@ -59,15 +50,15 @@ return view('user.profile' , compact('content'));
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User $user)
+    public function edit(string $id)
     {
-    
+        //
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -75,7 +66,7 @@ return view('user.profile' , compact('content'));
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
+    public function destroy(string $id)
     {
         //
     }
