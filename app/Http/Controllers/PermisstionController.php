@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Permisstion;
+use App\Models\Role;
 use Illuminate\Http\Request;
 
 class PermisstionController extends Controller
@@ -12,7 +13,8 @@ class PermisstionController extends Controller
      */
     public function index()
     {
-        //
+        $per = Permisstion::all();
+        return view('admin.per.index' , compact('per'));
     }
 
     /**
@@ -28,7 +30,8 @@ class PermisstionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Role::find($request->role_id)->permisstion()->sync($request->permission);
+        return back()->with('success' , 'تم تعيين الصلاحيات الجديدة');
     }
 
     /**
@@ -36,7 +39,7 @@ class PermisstionController extends Controller
      */
     public function show(Permisstion $permisstion)
     {
-        //
+        
     }
 
     /**

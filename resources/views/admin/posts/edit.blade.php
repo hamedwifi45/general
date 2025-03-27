@@ -91,6 +91,17 @@
         </span>
         @enderror
     </div>
+    <div class="form-row">
+        <div class="form-group col-lg-5">
+            <label for="slug">الاسم اللطيف</label>
+            <input type="text" name="slug" value="{{$post->slug}}" class="form-control">
+        </div>
+        <div class="form-group col-lg-6">
+            <label for="approved">الموافقة على المنشور</label>
+            <input type="checkbox"  {{$post->approved ? 'checked' : ''}} name="approved" value="{{$post->approved}}">
+        </div>
+    </div> 
+
     <div class="input-group my-3 file-area">
         <label for="image" class="mb-2">صورة الغلاف</label>
         <input type="file" name="image"  onchange="readCoverImage(this);" accept="image/*" id="image">
@@ -100,7 +111,7 @@
         <img id="cover-image-thumb" src="{{asset('storage/images/'.$post->image_path)}}" class="col-2" width="100" height="100"> 
         <span class="input-name col-6"></span>
     </div>
-    <button class="btn btn-outline-dark my-3" type="submit">انشر</button>
+    <button class="btn btn-outline-dark my-3" type="submit">تعديل</button>
     </form>
     
 </div>

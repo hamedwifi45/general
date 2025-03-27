@@ -65,12 +65,13 @@ class posts extends Controller
     public function update(Request $request, string $id)
     {
         $post = Post::find($id);
+        $requset['approved'] = $request->has('approved');
     $data = $request->validate( [
         'title' => 'required',
         'body' => 'required',
     ]);
-
-    $data['slug'] = Slug::unquiSlug($request->title,'posts');
+    $data['approved'] = $requset['approved'];
+    $data['slug'] = $request->slug;
     $data['category_id'] = $request->category_id;
 
     if($request->hasFile('image')) {

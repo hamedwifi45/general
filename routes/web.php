@@ -5,7 +5,9 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\admin\posts;
+use App\Http\Controllers\PermisstionController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +28,10 @@ Route::get('/notifiction' , [NotificationController::class , 'allNotification'])
 Route::get('admin/dashboard', [Dashbord::class , 'index'])->name('admin.dashbord');
 Route::resource('admin/category', CategoryController::class);
 Route::resource('admin/posts',posts::class);
+Route::resource('admin/roles',RoleController::class);
+Route::get('admin/permission',[PermisstionController::class , 'index'])->name('permission');
+Route::post('admin/permission',[PermisstionController::class , 'store'])->name('permissions');
+Route::get('permission',[RoleController::class , 'getByRole'])->name('permission.get');
 
 Route::get('/heloworld/{id}' , [UserController::class , 'getPostsByUser'])->name('profile');
 Route::get('/heloworld/{id}/comment' , [UserController::class , 'getCommentsByUser'])->name('Comments');

@@ -89,7 +89,7 @@ class PostController extends Controller
     
         $request->user()->posts()->where('slug', $post->slug)->update($data + ['image_path'=> $filename ?? 'default.jpg']);
     
-        return redirect(route('posts.show' , $post->slug))->with('success', 'تم تعديل المنشور بنجاح');
+        return redirect(route('post.show', $data['slug']))->with('success', 'تم تعديل المنشور بنجاح');
     
     }
 

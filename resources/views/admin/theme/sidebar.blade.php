@@ -43,21 +43,21 @@
       </li>
 
       <!-- Nav Item - Charts -->
-      <li class="nav-item">
-        <a class="nav-link text-right" href="#">
+      <li class="nav-item" {{request()->is('admin/roles')? 'active' : ''}}>
+        <a class="nav-link text-right" href="{{route('roles.index')}}">
         <i class="fas fa-table"></i>
           <span>الأدوار</span></a>
       </li>
 
       <!-- Nav Item - Tables -->
-      <li class="nav-item">
-        <a class="nav-link text-right" href="#">
+      <li class="nav-item" {{request()->is('admin/permission')? 'active' : ''}}>
+        <a class="nav-link text-right" href="{{route('permission')}}">
         <i class="fas fa-folder"></i>
           <span>الصلاحيات</span></a>
       </li>
 
-      <li class="nav-item">
-        <a class="nav-link text-right" href="#">
+      <li class="nav-item" >
+        <a class="nav-link text-right" href="">
         <i class="fas fa-file"></i>
           <span>الصفحات</span></a>
       </li>

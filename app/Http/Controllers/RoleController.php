@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Role;
 use Illuminate\Http\Request;
+use Livewire\Attributes\Validate;
 
 class RoleController extends Controller
 {
@@ -12,7 +13,9 @@ class RoleController extends Controller
      */
     public function index()
     {
-        //
+        $roles = Role::all();
+
+        return view('admin.roles.all' , compact('roles'));
     }
 
     /**
@@ -28,7 +31,14 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = [];
+        $request->validate(['name' => 'required']);
+        $data['name'] = $request->name;
+
+        $role = new Role ; 
+        $role->role = $data['name'];
+        $role->save();
+        return back()->with('success' , 'تم اضافة الدور بنجاح');
     }
 
     /**
@@ -60,6 +70,15 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
-        //
+        $role->delete();
+        return back()->with('success' , 'تم حذف الدور بنجاح');
+
+    }
+    public function getByRole(Request $data)
+    {
+        $permissions = Role::find($data->id)->permisstion()->pluck('permisstion_id');
+        // dd($permissions);
+
+        return $permissions;
     }
 }

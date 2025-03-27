@@ -44,7 +44,7 @@
         <img id="cover-image-thumb" src="{{asset('storage/images/'.$post->image_path)}}" class="col-2" width="100" height="100"> 
         <span class="input-name col-6"></span>
     </div>
-    <button class="btn btn-outline-dark my-3" type="submit">انشر</button>
+    <button class="btn btn-outline-dark my-3" type="submit">تعديل</button>
     </form>
     
 </div>

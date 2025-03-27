@@ -31,7 +31,8 @@
                             @foreach ($posts as $post )
                                 <tr>
                                     <td>{{$post->id}}</td>
-                                    <td>{{$post->title}}</td>
+                                    <td>
+                                        <a href="{{route('post.show' , $post->slug)}}">{{$post->title}}</a></td>
                                     <td>{{$post->slug}}</td>
                                     <td>{{Str::limit($post->body , 100 , 222)}}</td>
                                     <td>{{$post->user->name}}</td>
