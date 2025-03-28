@@ -29,9 +29,9 @@ Route::get('admin/dashboard', [Dashbord::class , 'index'])->name('admin.dashbord
 Route::resource('admin/category', CategoryController::class);
 Route::resource('admin/posts',posts::class);
 Route::resource('admin/roles',RoleController::class);
+Route::resource('admin/user',UserController::class);
 Route::get('admin/permission',[PermisstionController::class , 'index'])->name('permission');
 Route::post('admin/permission',[PermisstionController::class , 'store'])->name('permissions');
-Route::get('permission',[RoleController::class , 'getByRole'])->name('permission.get');
 
 Route::get('/heloworld/{id}' , [UserController::class , 'getPostsByUser'])->name('profile');
 Route::get('/heloworld/{id}/comment' , [UserController::class , 'getCommentsByUser'])->name('Comments');
@@ -53,6 +53,7 @@ Route::middleware([
 
 
 
+Route::get('permission',[RoleController::class , 'getByRole'])->name('permission.get');
 
 
 

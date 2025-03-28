@@ -27,8 +27,8 @@
       </li>
 
       <!-- Nav Item - Utilities Collapse Menu -->
-      <li class="nav-item">
-        <a class="nav-link text-right" href="#">
+      <li class="nav-item" {{request()->is('admin/user')? 'active' : ''}}>
+        <a class="nav-link text-right" href="{{route('user.index')}}">
           <i class="fas fa-users"></i>
           <span>المستخدمون</span>
         </a>

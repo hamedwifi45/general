@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -29,7 +30,8 @@ return view('user.profile' , compact('content'));
      */
     public function index()
     {
-        //
+        $users = User::with('role')->get();
+        return view('admin.user.index' , compact('users'));
     }
 
     /**
@@ -45,7 +47,17 @@ return view('user.profile' , compact('content'));
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate(['name' => 'required' , 'email' => ['required' , 'un'] , 'password' => 'required']);
+        $password = Hash::make($request->password);
+        
+        $role = $request->role_id;
+        $user = new User ; 
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = $password;
+        $user->role_id = $role;
+        $user->save();
+        return back()->with('success' , 'تم انشاء المستخدم الجديد بنجاح');
     }
 
     /**
@@ -61,7 +73,7 @@ return view('user.profile' , compact('content'));
      */
     public function edit(User $user)
     {
-    
+        return view('admin.user.edit' , compact('user'));
     }
 
     /**

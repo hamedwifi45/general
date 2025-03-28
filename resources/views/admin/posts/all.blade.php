@@ -34,7 +34,7 @@
                                     <td>
                                         <a href="{{route('post.show' , $post->slug)}}">{{$post->title}}</a></td>
                                     <td>{{$post->slug}}</td>
-                                    <td>{{Str::limit($post->body , 100 , 222)}}</td>
+                                    <td style="height: 88.6px;" class="">{!!Str::limit($post->body , 50 , 'للمزيد لاتضغط')!!}</td>
                                     <td>{{$post->user->name}}</td>
                                     <td>{{$post->created_at}}</td>
                                     <td><input type="checkbox" value="{{$post->approved}}" {{$post->approved ? 'checked' : ''}} name="approved" id=""></td>
