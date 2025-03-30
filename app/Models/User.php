@@ -88,7 +88,7 @@ class User extends Authenticatable
     }
     
     public function hasAllow($perm){
-        $role = $this->role->first();
+        $role = $this->role;
         return $role->permisstion()->whereName($perm)->first() ? true : false;
     }
     protected static function booted()

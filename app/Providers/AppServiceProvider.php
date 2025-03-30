@@ -50,13 +50,13 @@ class AppServiceProvider extends ServiceProvider
 
         Permisstion::whereIn('name', ['edit-post', 'delete-post', 'add-post'])->get()->map(function($per) {
             Gate::define($per->name, function($user, $post) use ($per) {
-                return $user->hasAllow($per->name) && ($user->id == $post->user_id || $user->isAdmin());
+                return $user->hasAllow($per->name) || ($user->id == $post->user_id || $user->isAdmin());
              });
         });
 
         Permisstion::whereIn('name', ['edit-user', 'delete-user', 'add-user'])->get()->map(function($per) {
             Gate::define($per->name, function($user) use ($per) {
-                return $user->hasAllow($per->name) && $user->isAdmin();
+                return $user->hasAllow($per->name) || $user->isAdmin();
              });
         });
     }
