@@ -12,7 +12,8 @@ class PageController extends Controller
      */
     public function index()
     {
-        //
+        $pages = Page::all();
+        return view('admin.page.index' , compact('pages'));
     }
 
     /**
@@ -20,7 +21,7 @@ class PageController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.page.create');
     }
 
     /**
@@ -28,7 +29,12 @@ class PageController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $page = new Page;
+        $page->slug = $request->slug;
+        $page->title = $request->title;
+        $page->content = $request->content;
+        $page->save();
+        return redirect(route('page.index'))->with('success', "تم اضافة الصفحة بنجاح");
     }
 
     /**
@@ -36,7 +42,7 @@ class PageController extends Controller
      */
     public function show(Page $page)
     {
-        //
+        return view('admin.page.show', compact('page'));
     }
 
     /**
@@ -44,7 +50,7 @@ class PageController extends Controller
      */
     public function edit(Page $page)
     {
-        //
+        return view('admin.page.edit' , compact('page'));
     }
 
     /**
@@ -52,7 +58,12 @@ class PageController extends Controller
      */
     public function update(Request $request, Page $page)
     {
-        //
+        $page->slug = $request->slug;
+        $page->title = $request->title;
+        $page->content = $request->content;
+        $page->save();
+        return redirect(route('page.index'))->with('success', "تم تعديل الصفحة بنجاح");
+    
     }
 
     /**
@@ -60,6 +71,8 @@ class PageController extends Controller
      */
     public function destroy(Page $page)
     {
-        //
+        $page->delete();
+        return redirect(route('page.index'))->with('success', "تم حذف الصفحة بنجاح");
+
     }
 }

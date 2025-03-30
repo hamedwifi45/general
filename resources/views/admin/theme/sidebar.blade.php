@@ -56,8 +56,8 @@
           <span>الصلاحيات</span></a>
       </li>
 
-      <li class="nav-item" >
-        <a class="nav-link text-right" href="">
+      <li class="nav-item" {{request()->is('admin/page')? 'active' : ''}}>
+        <a class="nav-link text-right" href="{{route('page.index')}}">
         <i class="fas fa-file"></i>
           <span>الصفحات</span></a>
       </li>

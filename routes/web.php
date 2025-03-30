@@ -5,9 +5,11 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\admin\posts;
+use App\Http\Controllers\PageController;
 use App\Http\Controllers\PermisstionController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\RoleController;
+use App\Http\Middleware\Admin;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,15 +26,16 @@ Route::post('/search' , [PostController::class , 'search'])->name('search');
 Route::post('/notifi' , [NotificationController::class , 'index'])->name('notifi');
 Route::get('/notifiction' , [NotificationController::class , 'allNotification'])->name('all.Notification');
 
-
-Route::get('admin/dashboard', [Dashbord::class , 'index'])->name('admin.dashbord');
-Route::resource('admin/category', CategoryController::class);
-Route::resource('admin/posts',posts::class);
-Route::resource('admin/roles',RoleController::class);
-Route::resource('admin/user',UserController::class);
-Route::get('admin/permission',[PermisstionController::class , 'index'])->name('permission');
-Route::post('admin/permission',[PermisstionController::class , 'store'])->name('permissions');
-
+Route::group(['prefix' => 'admin' , 'middleware' => Admin::class] , function(){
+    Route::get('/dashboard', [Dashbord::class , 'index'])->name('admin.dashbord');
+    Route::resource('/category', CategoryController::class);
+    Route::resource('/posts',posts::class);
+    Route::resource('/roles',RoleController::class);
+    Route::resource('/user',UserController::class);
+    Route::resource('/page',PageController::class)->parameter('page' , 'page:slug');
+    Route::get('/permission',[PermisstionController::class , 'index'])->name('permission');
+    Route::post('/permission',[PermisstionController::class , 'store'])->name('permissions');
+});
 Route::get('/heloworld/{id}' , [UserController::class , 'getPostsByUser'])->name('profile');
 Route::get('/heloworld/{id}/comment' , [UserController::class , 'getCommentsByUser'])->name('Comments');
 
@@ -53,7 +56,7 @@ Route::middleware([
 
 
 
-Route::get('permission',[RoleController::class , 'getByRole'])->name('permission.get');
+Route::get('permission',[RoleController::class , 'getByRole'])->name('permission.get')->middleware(Admin::class);
 
 
 

@@ -82,6 +82,15 @@ class User extends Authenticatable
     public function alert(){
         return $this->hasOne(Alert::class);
     }
+    public function isAdmin(){
+        $role = Role::where('role' , 'مدير')->first();
+        return $this->role->id == $role->id;
+    }
+    
+    public function hasAllow($perm){
+        $role = $this->role->first();
+        return $role->permisstion()->whereName($perm)->first() ? true : false;
+    }
     protected static function booted()
     {
         static::created(function ($user) {

@@ -7,6 +7,9 @@
         <div class="card mb-3">
             <div class="card-header">
                 <i class="fa fa-table"></i>
+                @can('add-user')
+                    
+                
                 <form action="{{route('user.store')}}" method="post">
                     @csrf
                     <div class="row">
@@ -33,7 +36,7 @@
                         </div>
                         <div class="col">
                             <label for="role_id">اختر الدور</label>
-                            <select name="role_id" class="form-select">
+                            <select name="role_id" class="form-control">
                                 @include('lists.roles')
                             </select>
                             
@@ -43,6 +46,7 @@
                         </div>
                     </div>
                 </form>
+                @endcan
             </div>
             <div class="card-body">
                 <table class="table table-bordered">
@@ -68,18 +72,24 @@
                         <td>{{$user->role->role}}</td>
                         <td>{{$user->created_at}}</td>
                         <td>
+                            @can('edit-user')
+                            
                             <form method="GET" action="{{ route('user.edit', $user->id) }}">
                                 @csrf
                                 @method('PATCH')
                                 <button type="submit" class="float-left" style="background-color: white;border: none;"><i class="bi bi-pencil-square text-success fa-lg"></i></button>
                             </form>
+                            @endcan
                         </td>
                         <td>
+                            @can('delete-user')
+                                
                             <form method="POST" action="{{ route('user.destroy', $user->id) }}" onsubmit="return confirm('هل أنت متأكد أنك تريد حذف المنشور هذا؟')">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="float-left" style="background-color: white;border: none;"><i class="bi bi-trash3-fill p-1  text-danger fa-lg"></i></button>
                             </form>
+                            @endcan
                           </td>
                     </tr>
                     @endforeach

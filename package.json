@@ -21,6 +21,7 @@
     "dependencies": {
         "@ckeditor/ckeditor5-build-classic": "^44.2.1",
         "bootstrap": "^5.3.3",
+        "bootstrap-icons": "^1.11.3",
         "ckeditor5": "^44.2.1"
     }
 }

@@ -47,7 +47,7 @@ return view('user.profile' , compact('content'));
      */
     public function store(Request $request)
     {
-        $data = $request->validate(['name' => 'required' , 'email' => ['required' , 'un'] , 'password' => 'required']);
+        $data = $request->validate(['name' => 'required' , 'email' => ['required' , 'unique:users,email'] , 'password' => 'required']);
         $password = Hash::make($request->password);
         
         $role = $request->role_id;
@@ -81,7 +81,22 @@ return view('user.profile' , compact('content'));
      */
     public function update(Request $request, User $user)
     {
-        //
+        
+        $data = $request->validate( [
+            'name' => 'required',
+            'email' => 'required',
+        ]);
+
+        
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->role_id = $request->role_id;
+
+        $user->save();
+
+        return redirect(route('user.index'))->with('success', 'تم تعديل معلومات المستخدم بنجاح');
+
     }
 
     /**
@@ -89,6 +104,7 @@ return view('user.profile' , compact('content'));
      */
     public function destroy(User $user)
     {
-        //
+        $user->delete();
+        return back()->with('success', "تم حذف المستخدم بنجاح");
     }
 }

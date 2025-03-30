@@ -19,7 +19,7 @@
             @foreach($per as $permission)
               <div class="col-lg-4"> 
                 <label for="permission">
-                  <input type="checkbox" class="" name="permission[]" value="{{$permission->id}}" {{$permission->roles()->where('name' , 'المدير')? 'checked' : ''}}>
+                  <input type="checkbox" class="" name="permission[]" value="{{$permission->id}}" {{$permission->roles()->where('role' , 'مدير')? 'checked' : ''}}>
                     {{$permission->desc}}
                 </label>
               </div>

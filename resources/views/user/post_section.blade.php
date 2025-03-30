@@ -7,15 +7,21 @@
             <div class="row">
                 <div class="col-12">
                     @if (Auth::check())
-                    <form method="POST" action="{{ route('post.destroy', $post->id) }}" onsubmit="return confirm('هل أنت متأكد أنك تريد حذف المنشور هذا؟')">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="float-left"><i class="bi bi-trash3-fill text-xl text-danger fa-lg"></i></button>
-                    </form>
+                    @can('delete-post' , $post)
+                        <form method="POST" action="{{ route('post.destroy', $post->id) }}" onsubmit="return confirm('هل أنت متأكد أنك تريد حذف المنشور هذا؟')">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="float-left"><i class="bi bi-trash3-fill text-xl text-danger fa-lg"></i></button>
+                        </form>
+                        
+                    @endcan
+                    @can('edit-post' , $post)
+
                     <form method="post" action="{{ route('post.edit', $post->slug) }}">
                         @csrf
                         <button type="submit" class="float-left"><i class="bi bi-pencil-square text-xl text-success fa-lg ml-3" ></i></button>
                     </form>
+                    @endcan
                     @endif
                     <img style="float:right" src="{{ $post->user->profile_photo_url }}" width="50px" class="rounded-full"/>
                     <p class="mt-2 me-3" style="display:inline-block;"><strong>{{$post->user->name}}</strong></p>   

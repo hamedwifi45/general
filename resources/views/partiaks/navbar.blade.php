@@ -16,15 +16,16 @@
               
               <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      Dropdown
+                      الصفحات
                   </a>
-                  <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="#">Action</a></li>
-                      <li><a class="dropdown-item" href="#">Another action</a></li>
-                      <li><hr class="dropdown-divider"></li>
-                      <li><a class="dropdown-item" href="#">Something else here</a></li>
-                  </ul>
-                  </li>
+                  <div class="dropdown-menu text-right">
+                    @foreach ($pages as $page)
+                        <a href="{{route('page.show' , $page->slug)}}" class="dropdown-item">
+                            {{$page->title}}
+                        </a>
+                    @endforeach
+                  </div>
+                  
               </li>
           </ul>
   
@@ -91,10 +92,12 @@
                                         <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
                                     </x-responsive-nav-link>
                                   
-                                  
-                                  <x-responsive-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')">
-                                      {{ __('الملف الشخصي') }}
+                                  @admin
+
+                                  <x-responsive-nav-link href="{{ route('admin.dashbord') }}" :active="request()->routeIs('profile.show')">
+                                      {{ __('ادارة ') }}
                                   </x-responsive-nav-link>
+                                  @endadmin
   
                                   @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
                                       <x-responsive-nav-link href="{{ route('api-tokens.index') }}" :active="request()->routeIs('api-tokens.index')">
