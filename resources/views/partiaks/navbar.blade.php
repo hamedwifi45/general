@@ -10,11 +10,9 @@
                   <a class="nav-link active" aria-current="page" href="{{ url('/') }}">الصفحة الرئيسية</a>
               </li>
               <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      الصفحات
-                  </a>
+                  
               
-              <li class="nav-item dropdown">
+              <li class="nav-item dropdown ">
                   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                       الصفحات
                   </a>

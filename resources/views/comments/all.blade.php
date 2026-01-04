@@ -2,7 +2,7 @@
     @foreach ($comments as $comment)
         <div class="card mb-3">
             <div class="card-body">
-                <img src="{{ $comment->user->profile_photo_path ? : $comment->user->profile_photo_url }}" alt="" class="rounded-full " height="50px" width="50px" style="float:right">
+                <img src="{{asset('storage/'. $comment->user->profile_photo_path ? : $comment->user->profile_photo_url) }}" alt="" class="rounded-full " height="50px" width="50px" style="float:right">
                 <p class="mt-2 me-3" style="display: inline-block"><strong>{{ $comment->user->name }}</strong></p>
                 <div class="col-12">
                     <div class="row">

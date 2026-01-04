@@ -10,7 +10,7 @@
     <div class="card mb-3 animated-card">
         <div class="card-body position-relative">
             <div class="user-profile">
-                <img src="{{$post->user->profile_photo_path ? : $post->user->profile_photo_url}}" 
+                <img src="{{asset('storage/' . $post->user->profile_photo_path ? : $post->user->profile_photo_url)}}" 
                      alt="{{$post->user->name}}" 
                      class="profile-img">
                 <div class="profile-info">

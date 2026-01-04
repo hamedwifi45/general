@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Page;
 use Illuminate\Http\Request;
+use Livewire\Attributes\Validate;
 
 class PageController extends Controller
 {
@@ -29,6 +30,8 @@ class PageController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate(['slug' => 'required' , 'title' => 'required' , 'content' =>'required' ]);
+
         $page = new Page;
         $page->slug = $request->slug;
         $page->title = $request->title;
@@ -58,6 +61,7 @@ class PageController extends Controller
      */
     public function update(Request $request, Page $page)
     {
+        $request->validate(['slug' => 'required' , 'title' => 'required' , 'content' =>'required' ]);
         $page->slug = $request->slug;
         $page->title = $request->title;
         $page->content = $request->content;

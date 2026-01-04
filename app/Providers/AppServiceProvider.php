@@ -9,6 +9,7 @@ use App\Http\ViewComposer\RolesComposer;
 use App\Models\Permisstion;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -47,7 +48,7 @@ class AppServiceProvider extends ServiceProvider
         //         return $user->hasAllow($per->name) && ($user->id == $post->user_id || $user->isAdmin());
         //      });
         // });
-
+        if (Schema::hasTable('permisstions')){
         Permisstion::whereIn('name', ['edit-post', 'delete-post', 'add-post'])->get()->map(function($per) {
             Gate::define($per->name, function($user, $post) use ($per) {
                 return $user->hasAllow($per->name) || ($user->id == $post->user_id || $user->isAdmin());
@@ -59,6 +60,7 @@ class AppServiceProvider extends ServiceProvider
                 return $user->hasAllow($per->name) || $user->isAdmin();
              });
         });
+    }
     }
 
 }

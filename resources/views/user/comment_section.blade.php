@@ -5,7 +5,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-2">
-                        <img src="{{ $comment->user->profile_photo_path ?: $comment->user->profile_photo_url}}" 
+                        <img src="{{asset('storage/'. $comment->user->profile_photo_path ?: $comment->user->profile_photo_url)}}" 
                         class="rounded-full mx-auto border " 
                         width="150" 
                         alt="{{$comment->user->name}}">

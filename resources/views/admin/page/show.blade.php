@@ -1,10 +1,11 @@
 @extends('layouts.main')
 
 @section('content')
-    <div class="col-md-8 bg-white" style="height: fit-content;>">
-        <h2 class="my-4"> {{ $page->title }} </h2>
+    <div class="col-md-8 p-3 bg-white" style="height: fit-content;>">
+        <h2 class="my-2"> {{ $page->title }} </h2>
 
-        {!! $page->content !!} 
+        {!! $page->content !!}
+
     </div>
 
     @include('partiaks.sidebar')

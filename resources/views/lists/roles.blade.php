@@ -1,3 +1,3 @@
 @foreach ($roles as $cate) 
-<option value="{{$cate->id}}">{{$cate->role}}</option>
+    <option class="text-center" value="{{$cate->id}}">{{$cate->role}}</option>
 @endforeach

@@ -13,6 +13,7 @@ class PostController extends Controller
     public $post;
     public function __construct(Post $post){
         $this->post = $post;
+
     }
     /**
      * Display a listing of the resource.
@@ -62,6 +63,8 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+        abort_unless(auth()->user()->can('edit-post', $post), 403);
+
         return view('posts.edit' , compact('post'));
     }
 
@@ -74,7 +77,8 @@ class PostController extends Controller
             'title' => 'required',
             'body' => 'required',
         ]);
-    
+        abort_unless(auth()->user()->can('edit-post', $post), 403);
+
         $data['slug'] = Slug::unquiSlug($request->title,'posts');
         $data['category_id'] = $request->category_id;
     

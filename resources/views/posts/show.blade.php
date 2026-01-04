@@ -5,7 +5,7 @@
 <div class="col-md-8">
     <div class="bg-white p-5">
         <div class="user-profile">
-            <img src="{{$post->user->profile_photo_path ? : $post->user->profile_photo_url}}" 
+            <img src="{{asset('storage/' . $post->user->profile_photo_path ? : $post->user->profile_photo_url)}}" 
                  alt="{{$post->user->name}}" 
                  class="profile-img">
             <div class="profile-info">

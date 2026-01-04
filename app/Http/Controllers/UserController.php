@@ -17,8 +17,7 @@ class UserController extends Controller
 
     public function getPostsByUser($id){
         $content = $this->user::with('posts')->find($id);
-
-return view('user.profile' , compact('content'));
+        return view('user.profile' , compact('content'));
     }
     public function getCommentsByUser($id){
         $content = $this->user::with('comments')->find($id);

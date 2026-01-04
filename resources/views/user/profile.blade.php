@@ -5,11 +5,13 @@
     <div class="container text-muted">
         <div class="row mb-4">
             <div>
-                <img src="{{ $content->profile_photo_path ?: $content->profile_photo_url}}" 
+                
+                <img src="{{asset('storage/'. $content->profile_photo_path ? : $content->profile_photo_url)}}" 
                                      class="rounded-full mx-auto border " 
                                      width="150" 
                                      alt="{{$content->name}}">
                 <h2 class="text-center mt-1">{{$content->name}}</h2>
+                
             </div>
         </div>
         <div class="row p-3">
