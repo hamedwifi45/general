@@ -20,6 +20,7 @@ class UsersSeeder extends Seeder
             'email' => 'بطاطا التاسع@بطاطا.com',
             'password' => Hash::make('8888888888'),
             'role_id' => '1',
+            'profile_photo_path' => '/profile-photos/17oQHLV8ueDjcNRy1m3AWv1qFu7kIc0NWR5zBPBA.png'
             
         ]);
         DB::table('users')->insert([
@@ -28,6 +29,7 @@ class UsersSeeder extends Seeder
             'email' => ' التاسع@بطاطا.com',
             'password' => Hash::make('99999999'),
             'role_id' => '1',
+            'profile_photo_path' => '/profile-photos/17oQHLV8ueDjcNRy1m3AWv1qFu7kIc0NWR5zBPBA.png'
             
         ]);
         DB::table('users')->insert([
@@ -36,6 +38,7 @@ class UsersSeeder extends Seeder
             'email' => 'بطاطا @بطاطا.com',
             'password' => Hash::make('77777777'),
             'role_id' => '1',
+            'profile_photo_path' => '/profile-photos/17oQHLV8ueDjcNRy1m3AWv1qFu7kIc0NWR5zBPBA.png'
             
         ]);
         DB::table('users')->insert([
@@ -44,6 +47,7 @@ class UsersSeeder extends Seeder
             'email' => 'بطاطا التاسع@.com',
             'password' => Hash::make('8888888888'),
             'role_id' => '1',
+            'profile_photo_path' => '/profile-photos/17oQHLV8ueDjcNRy1m3AWv1qFu7kIc0NWR5zBPBA.png'
             
         ]);
     }
